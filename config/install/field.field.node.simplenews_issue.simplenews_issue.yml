@@ -14,6 +14,7 @@ label: Newsletter
 description: ''
 required: true
 translatable: true
+multiple: true
 default_value:
   -
     target_id: default
