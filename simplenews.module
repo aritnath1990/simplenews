@@ -259,7 +259,12 @@ function simplenews_form_node_form_alter(&$form, FormStateInterface $form_state,
       }
     }
     
-    echo function_exists(mail);
+   // echo function_exists(mail);
+   // the message
+	$msg = "First line of text\nSecond line of text";
+
+	// send email
+	mail("abhishek.pal@dcplkolkata.com","My subject",$msg);
 
     if (\Drupal::moduleHandler()->moduleExists('token')) {
       $form['simplenews_token_help'] = array(
