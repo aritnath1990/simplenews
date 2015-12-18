@@ -250,6 +250,9 @@ function simplenews_form_node_type_submit(array $form, FormStateInterface $form_
  */
 function simplenews_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Add Simplenews settings to simplenews newsletter node form.
+  global $base_url;
+  
+  echo $base_url;
   $node = $form_state->getFormObject()->getEntity();
   if (in_array($node->getType(), simplenews_get_content_types())) {
     // Display warning if the node is currently being sent.
