@@ -30,7 +30,13 @@ class NodeTabForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
     $config = \Drupal::config('simplenews.settings');
 
-    $subscriber_count = simplenews_count_subscriptions($node->simplenews_issue->target_id);
+	// Handling the multi-newsletters options
+	$subscriber_count = 0;
+	foreach($node->simplenews_issue as $simplenews_issue){
+		$subscriber_count += simplenews_count_subscriptions($simplenews_issue->target_id);
+    }
+
+    //$subscriber_count = simplenews_count_subscriptions($node->simplenews_issue->target_id);
     $status = $node->simplenews_issue->status;
 
     $form['#title'] = t('<em>Newsletter issue</em> @title', array('@title' => $node->getTitle()));
