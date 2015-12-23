@@ -253,6 +253,7 @@ class SpoolStorage implements SpoolStorageInterface {
 		$select->addExpression($node->id(), 'entity_id');
 		$select->addExpression(SIMPLENEWS_SUBSCRIPTION_STATUS_SUBSCRIBED, 'status');
 		$select->addExpression(REQUEST_TIME, 'timestamp');
+		$select->condition('s.id', db_select('simplenews_mail_spool', 'r')->fields('r', array('snid'))->condition('entity_id', $node->id(), '='), 'NOT IN');
 		
 	    $simplenews_issue->subscribers = simplenews_count_subscriptions($simplenews_issue->target_id);
 	 
