@@ -31,10 +31,16 @@ class NodeTabForm extends FormBase {
     $config = \Drupal::config('simplenews.settings');
 
 	// Handling the multi-newsletters options
-	$subscriber_count = 0;
+	$subcriber_ids = array();
 	foreach($node->simplenews_issue as $simplenews_issue){
-		$subscriber_count += simplenews_count_subscriptions($simplenews_issue->target_id);
-    }
+		$subscribers = db_select('simplenews_subscriber__subscriptions', 'r')->fields('r', array('entity_id'))->condition('subscriptions_target_id', $simplenews_issue->target_id)->execute()->fetchAll();
+		foreach($subscribers as $subscribe){
+			 if (!in_array($subscribe->entity_id, $subcriber_ids)){
+				$subcriber_ids[] = $subscribe->entity_id;
+			 }
+		}		
+    }    
+    $subscriber_count = count($subcriber_ids);
 
     //$subscriber_count = simplenews_count_subscriptions($node->simplenews_issue->target_id);
     $status = $node->simplenews_issue->status;
